@@ -13,9 +13,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -56,7 +61,10 @@ fun AppGastosUI(
         startDestination = "inicio")
     {
         composable("inicio") {
-            PantallaListaGastos(gastos = vmListaGastos.gastos)
+            PantallaListaGastos(
+                gastos = vmListaGastos.gastos,
+                onAdd = { navController.navigate("form") }
+            )
         }
         composable("form") {
             PantallaFormGasto()
@@ -95,7 +103,6 @@ fun OpcionesCategoriasUI() {
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
 fun PantallaFormGasto() {
     var monto by rememberSaveable { mutableIntStateOf(0) }
@@ -134,13 +141,28 @@ fun PantallaFormGasto() {
     }
 }
 
+@Preview(showSystemUi = true)
 @Composable
 fun PantallaListaGastos(
-    gastos: List<Gasto>
+    gastos: List<Gasto> = listOf(),
+    onAdd:() -> Unit = {}
 ) {
-    LazyColumn {
-        items(gastos) {
-            Text(it.descripcion)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                onAdd()
+            }) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Agregar registro de gasto")
+            }
+        }
+    ) {
+        LazyColumn(
+            modifier = Modifier.padding(vertical = it.calculateTopPadding())
+        ) {
+            items(gastos) {
+                Text(it.descripcion)
+            }
         }
     }
+
 }
