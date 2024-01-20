@@ -61,6 +61,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    // Google Play Services for Location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    // nos permite convertir la función de la ubicación para uso con Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+
     // Navegación Compose
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
